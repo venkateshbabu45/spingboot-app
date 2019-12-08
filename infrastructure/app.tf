@@ -152,12 +152,12 @@ resource "aws_ecs_service" "ecs_service" {
 resource "aws_alb_listener_rule" "ecs_alb_listener_rule" {
   listener_arn  = "${data.terraform_remote_state.platform.ecs_alb_listener_arn}"
 
-  "action" {
+  action {
     type              = "forward"
     target_group_arn  = "${aws_alb_target_group.ecs_app_target_group.arn}"
   }
 
-  "condition" {
+  condition {
     field   = "host-header"
     values  = ["${lower(var.ecs_service_name)}.${data.terraform_remote_state.platform.ecs_domain_name}"]
   }
